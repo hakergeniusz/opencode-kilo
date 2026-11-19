@@ -1,0 +1,26 @@
+{
+  "name": "opencode-kilo",
+  "version": "0.1.0",
+  "description": "Kilo Code Gateway provider for OpenCode V2 — cached catalog, lazy model registration, OAuth device login",
+  "private": false,
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "kilo",
+    "provider"
+  ],
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "@opencode/plugin": "latest"
+  },
+  "devDependencies": {
+    "typescript": "latest"
+  }
+}
