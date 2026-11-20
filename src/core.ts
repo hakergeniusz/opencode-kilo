@@ -49,7 +49,6 @@ export function resolveSettings(options: Record<string, unknown>): KiloSettings 
     models: pickOption(options, "models", ["KILO_MODELS"]) ?? "",
     debug:
       options.debug === true ||
-      process.env.PI_KILO_DEBUG === "1" ||
       process.env.OPENCODE_KILO_DEBUG === "1",
   }
 }
@@ -94,7 +93,7 @@ export interface KiloAccess {
   organizationId?: string
 }
 
-/** Stored OAuth takes precedence over the API key, matching pi-kilo. */
+/** Stored OAuth credentials take precedence over the API key. */
 export function resolveAccess(
   settings: KiloSettings,
   stored: StoredCredential | undefined,
@@ -218,10 +217,9 @@ async function fetchKiloProfile(
 }
 
 /**
- * pi-kilo offered an interactive organization picker. The V2 server part has
- * no ask-user surface inside a command, so the org is chosen from plugin
- * options / env (or left as "personal"), exactly the fallback pi-kilo used
- * when no selection callback was available.
+ * Choose an organization from plugin options / environment. If no interactive
+ * picker is available and no organization is pinned, the personal account is
+ * used.
  */
 export async function selectOrganization(
   settings: KiloSettings,
@@ -449,8 +447,7 @@ function modelCompatibility(m: OpenRouterModel, protocol: "chat" | "responses"):
   }
   if (m.id.startsWith("anthropic/")) compat.cacheFormat = "anthropic"
   if (m.id === "deepseek/deepseek-v4-flash" || m.id === "deepseek/deepseek-v4-pro") {
-    // pi-kilo's requiresReasoningContentOnAssistantMessages: replay reasoning
-    // in the assistant message's `reasoning_content` field.
+    // Replay reasoning in the assistant message's `reasoning_content` field.
     compat.reasoningField = "reasoning_content"
     compat.requireReasoning = true
   }

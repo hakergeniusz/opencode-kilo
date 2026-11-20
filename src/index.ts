@@ -1,10 +1,9 @@
 /**
  * opencode-kilo — Kilo Code Gateway provider for OpenCode V2.
  *
- * Native port of hakergeniusz/pi-kilo. It registers one `kilo` provider with
- * an OpenCode-compatible model catalog, keeps registration cheap (free tier
- * + recently used models + KILO_MODELS overrides), and adds device-code OAuth
- * login via the `/kilo-login` command.
+ * Registers a `kilo` provider with an OpenCode-compatible model catalog, keeps
+ * registration cheap (free tier + recently used models + KILO_MODELS
+ * overrides), and adds device-code OAuth login via the `/kilo-login` command.
  */
 
 import { Model, Plugin, Provider } from "@opencode/plugin"
@@ -204,7 +203,7 @@ export default Plugin.define({
     )
 
     // One-time Terms of Service notice on first use of a Kilo model, shown
-    // only to unauthenticated users (same rule as pi-kilo).
+    // only to unauthenticated users.
     let tosShown = false
     registrations.push(
       await ctx.session.hook(

@@ -1,10 +1,10 @@
 /**
- * Kilo gateway SSE quirk normalization, ported verbatim from pi-kilo.
+ * Kilo gateway SSE quirk normalization.
  *
  * Kilo may emit `response.failed` with an `error.type` but no `error.code`.
  * The OpenAI Responses parser requires `error.code`, so we supply it while
  * keeping the failure intact. This is applied as an OpenCode `http.response`
- * session hook rather than a custom stream implementation.
+ * session hook.
  */
 
 type JsonObject = Record<string, unknown>
